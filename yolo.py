@@ -298,8 +298,7 @@ def detect_video(yolo, video_path, output_path=""):
                     fontScale=0.50, color=(255, 0, 0), thickness=2)
         cv2.namedWindow("result", cv2.WINDOW_NORMAL)
         # cv2.imshow("result", result) Xander commented out
-        from google.colab.patches import cv2_imshow # Xander added
-        cv2_imshow(result) # Xander added
+        print("HELLO") # Xander added, debugging
 
         if isOutput:
             out.write(result)
