@@ -133,7 +133,7 @@ for dataset, datatype in sets:
         #  "iscrowd": 0 or 1
         # }
         image_id = annotation['image_id']
-        image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, id_to_name[image_id]) # Xander changed from '%s/%s/%012d.jpg'
+        image_file = '%s/%s/%s' % (dataset_realpath, datatype, id_to_name[image_id]) # Xander changed from '%s/%s/%012d.jpg'
 
         # convert coco category id if need
         category_id = annotation['category_id']
