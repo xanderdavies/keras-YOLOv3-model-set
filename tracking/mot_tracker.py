@@ -363,7 +363,10 @@ def sort(yolo, args):
         # refresh window
         cv2.namedWindow("SORT", 0);
         cv2.resizeWindow('SORT', 1024, 768);
-        cv2.imshow('SORT', frame)
+        # cv2.imshow('SORT', frame)  Xander commented out
+        from google.colab.patches import cv2_imshow # Xander added
+        print("Testing colab cv2_imshow") # Xander added
+        cv2_imshow(frame) # Xander added
 
         if save_output:
             #save a frame
