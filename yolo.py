@@ -321,7 +321,9 @@ def detect_img(yolo):
         else:
             r_image, _, _, _ = yolo.detect_image(image)
             # r_image.show() Xander commented out
-            r_image
+            print("Debug Hi")
+            from matplotlib.pyplot import imshow
+            imshow(r_image)
 
 
 def main():
