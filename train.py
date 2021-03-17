@@ -6,7 +6,7 @@ Retrain the YOLO model for your own dataset.
 import os, time, random, argparse
 import numpy as np
 import tensorflow.keras.backend as K
-from tensorflow.keras.utils import multi_gpu_model
+from keras.utils import multi_gpu_model
 from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint, ReduceLROnPlateau, LearningRateScheduler, EarlyStopping, TerminateOnNaN, LambdaCallback
 from tensorflow_model_optimization.sparsity import keras as sparsity
 
