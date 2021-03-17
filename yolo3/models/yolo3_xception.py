@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """YOLO_v3 Xception Model Defined in Keras."""
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras.layers import UpSampling2D, Concatenate
 from tensorflow.keras.models import Model
 from tensorflow.keras.applications.xception import Xception

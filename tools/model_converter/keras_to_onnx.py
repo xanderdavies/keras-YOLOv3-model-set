@@ -8,7 +8,7 @@ import sys
 import argparse
 import shutil
 import subprocess
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras.models import load_model
 import keras2onnx
 import onnx

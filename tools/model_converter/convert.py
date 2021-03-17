@@ -19,7 +19,7 @@ import os, sys
 from collections import defaultdict
 
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import (Conv2D, DepthwiseConv2D, Input, ZeroPadding2D, Add, Multiply, Lambda, Dropout,
                           UpSampling2D, MaxPooling2D, AveragePooling2D, Concatenate, Activation)

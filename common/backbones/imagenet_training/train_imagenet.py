@@ -28,7 +28,7 @@ from yolo4.models.yolo4_darknet import CSPDarkNet53
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-#import tensorflow as tf
+#import tensorflow.compat.v1 as tf
 #config = tf.ConfigProto()
 #config.gpu_options.allow_growth=True   #dynamic alloc GPU resource
 #config.gpu_options.per_process_gpu_memory_fraction = 0.9  #GPU memory threshold 0.3

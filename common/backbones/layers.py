@@ -5,7 +5,7 @@ from functools import wraps
 
 from tensorflow.keras.layers import Conv2D, DepthwiseConv2D, BatchNormalization
 from tensorflow.keras.regularizers import l2
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 L2_FACTOR = 1e-5
 

@@ -5,7 +5,7 @@ Script to convert YOLO h5 or pb model to CoreML model
 """
 import os, sys, argparse
 from tensorflow.keras.models import load_model
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import tfcoreml
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..'))

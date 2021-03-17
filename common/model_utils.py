@@ -23,7 +23,7 @@ def add_metrics(model, metric_dict):
 
 
 def get_pruning_model(model, begin_step, end_step):
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
     if tf.__version__.startswith('2'):
         # model pruning API is not supported in TF 2.0 yet
         raise Exception('model pruning is not fully supported in TF 2.x, Please switch env to TF 1.x for this feature')

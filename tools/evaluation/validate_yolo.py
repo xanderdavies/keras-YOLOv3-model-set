@@ -10,7 +10,7 @@ import MNN
 import onnxruntime
 from tensorflow.keras.models import load_model
 from tensorflow.lite.python import interpreter as interpreter_wrapper
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..'))
 from yolo5.postprocess_np import yolo5_postprocess_np

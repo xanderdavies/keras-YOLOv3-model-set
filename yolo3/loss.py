@@ -2,7 +2,7 @@
 #!/usr/bin/python3
 
 import math
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras import backend as K
 from yolo3.postprocess import yolo3_decode
 

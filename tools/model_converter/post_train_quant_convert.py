@@ -7,7 +7,7 @@ tensorflow 2.0.0 build
 """
 import os, sys, argparse
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras.models import load_model
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', '..'))

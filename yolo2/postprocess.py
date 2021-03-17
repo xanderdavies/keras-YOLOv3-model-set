@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding=utf-8 -*-
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.keras import backend as K
 
 

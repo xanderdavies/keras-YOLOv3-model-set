@@ -12,7 +12,7 @@ from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
 from common.backbones.efficientnet import swish
 from common.backbones.mobilenet_v3 import hard_sigmoid, hard_swish
 from yolo4.models.layers import mish
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 
 
 def optimize_tf_gpu(tf, K):

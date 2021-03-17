@@ -9,7 +9,7 @@ import os, sys, argparse
 import cv2
 import time
 from timeit import default_timer as timer
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import numpy as np
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model, load_model
@@ -25,7 +25,7 @@ from yolo2.model import get_yolo2_model, get_yolo2_inference_model
 from yolo2.postprocess_np import yolo2_postprocess_np
 from common.data_utils import preprocess_image
 from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optimize_tf_gpu
-from tensorflow.keras.utils import multi_gpu_model
+# from tensorflow.keras.utils import multi_gpu_model
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -35,10 +35,10 @@ optimize_tf_gpu(tf, K)
 #tf.enable_eager_execution()
 
 default_config = {
-        "model_type": 'tiny_yolo3_darknet',
-        "weights_path": os.path.join('weights', 'yolov3-tiny.h5'),
+        "model_type": 'scaled_yolo4_csp_darknet',
+        "weights_path": os.path.join('weights', 'scaled-yolov4-csp.h5'),
         "pruning_model": False,
-        "anchors_path": os.path.join('configs', 'tiny_yolo3_anchors.txt'),
+        "anchors_path": os.path.join('configs', 'yolo4_anchors.txt'),
         "classes_path": os.path.join('configs', 'coco_classes.txt'),
         "score" : 0.1,
         "iou" : 0.4,

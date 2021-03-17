@@ -10,7 +10,7 @@ holds both the model architecture and its associated weights.
 """
 
 import os, sys
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import graph_io
 from pathlib import Path

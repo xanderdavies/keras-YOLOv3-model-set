@@ -137,7 +137,7 @@ def _pep_block(inputs, proj_filters, filters, stride, expansion, block_id):
 
 
 #def expand_upsampling2d(args):
-    #import tensorflow as tf
+    #import tensorflow.compat.v1 as tf
     #x = args[0]
     #inputs = args[1]
     #in_shapes = K.shape(inputs)[1:3]

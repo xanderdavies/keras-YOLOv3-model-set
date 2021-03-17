@@ -10,7 +10,7 @@ import tensorflow
 if tensorflow.__version__.startswith('2'):
     import tensorflow.compat.v1 as tf
 else:
-    import tensorflow as tf
+    import tensorflow.compat.v1 as tf
 
 
 def _run_in_batches(f, data_dict, out, batch_size):

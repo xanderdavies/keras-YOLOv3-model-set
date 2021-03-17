@@ -5,7 +5,7 @@ Script to calculate FLOPs & PARAMs of a tf.keras model.
 Compatible with TF 1.x and TF 2.x
 """
 import os, sys, argparse
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Input
