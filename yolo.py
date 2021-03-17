@@ -321,7 +321,7 @@ def detect_img(yolo):
         else:
             r_image, _, _, _ = yolo.detect_image(image)
             # r_image.show() # Xander commented out
-            r_image.save(img.split('/')[-1])
+            r_image.save(f"output/{img.split('/')[-1]}")
 
 
 def main():
