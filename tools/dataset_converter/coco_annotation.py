@@ -111,8 +111,8 @@ for dataset, datatype in sets:
             #  "date_captured": "date_string",
             #  "id": int
             # }
-            image_id = image['id']
-            image_file = '%s/%s/%012d.jpg' % (dataset_realpath, datatype, image_id)
+            image_id = image['file_name'] # Xander changed from 'id'
+            image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, image_id) # Xander changed from '%s/%s/%012d.jpg'
             image_annotation_dict[image_file] = []
 
     pbar = tqdm(total=len(annotations), desc='Parsing %s'%(datatype))
@@ -128,7 +128,7 @@ for dataset, datatype in sets:
         #  "iscrowd": 0 or 1
         # }
         image_id = annotation['image_id']
-        image_file = '%s/%s/%012d.jpg' % (dataset_realpath, datatype, image_id)
+        image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, image_id) # Xander changed from '%s/%s/%012d.jpg'
 
         # convert coco category id if need
         category_id = annotation['category_id']
