@@ -98,8 +98,7 @@ for dataset, datatype in sets:
 
     # to include no object image, we need to involve
     # all images to image_annotation_dict
-    id_to_name = {} # Xander added this line
-    if args.include_no_obj:
+    if args.include_no_obj: # Xander says not in use
         images = annotation_data['images']
         for image in images:
             # image format:
@@ -112,10 +111,14 @@ for dataset, datatype in sets:
             #  "date_captured": "date_string",
             #  "id": int
             # }
-            image_id = image['file_name'] # Xander changed from 'id'
-            id_to_name[image['id']] = image['file_name'] # Xander added this line
-            image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, image_id) # Xander changed from '%s/%s/%012d.jpg'
+            image_id = image['id'] # Xander changed from 'id'
+            image_file = '%s/%s/%012d.jpg' % (dataset_realpath, datatype, image_id)
             image_annotation_dict[image_file] = []
+    else: # Xander added this
+        id_to_name = {}
+        images = annotation_data['images']
+        for image in images:
+            id_to_name[image['id']] = image['file_name'] # Xander added this line
 
     pbar = tqdm(total=len(annotations), desc='Parsing %s'%(datatype))
     for annotation in annotations:
