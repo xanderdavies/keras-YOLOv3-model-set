@@ -6,7 +6,7 @@ import numpy as np
 from tqdm import tqdm
 from collections import defaultdict, OrderedDict
 
-sets=[('instances_train2017', 'train2017'), ('instances_val2017', 'val2017')]
+sets=[('instances_train', 'train'), ('instances_val', 'val')]
 
 class_count = {}
 
