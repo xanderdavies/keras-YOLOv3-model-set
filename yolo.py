@@ -320,7 +320,8 @@ def detect_img(yolo):
             continue
         else:
             r_image, _, _, _ = yolo.detect_image(image)
-            r_image.show()
+            # r_image.show() Xander commented out
+            r_image
 
 
 def main():
