@@ -100,6 +100,7 @@ for dataset, datatype in sets:
     # all images to image_annotation_dict
     if args.include_no_obj:
         images = annotation_data['images']
+        id_to_name = {}# Xander added this line
         for image in images:
             # image format:
             # {
@@ -112,6 +113,7 @@ for dataset, datatype in sets:
             #  "id": int
             # }
             image_id = image['file_name'] # Xander changed from 'id'
+            id_to_name[image['id']] = image['file_name'] # Xander added this line
             image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, image_id) # Xander changed from '%s/%s/%012d.jpg'
             image_annotation_dict[image_file] = []
 
@@ -128,7 +130,7 @@ for dataset, datatype in sets:
         #  "iscrowd": 0 or 1
         # }
         image_id = annotation['image_id']
-        image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, image_id) # Xander changed from '%s/%s/%012d.jpg'
+        image_file = '%s/%s/%s.jpg' % (dataset_realpath, datatype, id_to_name[image_id]) # Xander changed from '%s/%s/%012d.jpg'
 
         # convert coco category id if need
         category_id = annotation['category_id']
