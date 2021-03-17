@@ -98,9 +98,9 @@ for dataset, datatype in sets:
 
     # to include no object image, we need to involve
     # all images to image_annotation_dict
+    id_to_name = {} # Xander added this line
     if args.include_no_obj:
         images = annotation_data['images']
-        id_to_name = {}# Xander added this line
         for image in images:
             # image format:
             # {
