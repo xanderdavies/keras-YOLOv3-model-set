@@ -1,4 +1,4 @@
-numpy==1.17.5
+numpy # ==1.17.5
 setuptools
 scipy
 scikit-learn
