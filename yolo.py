@@ -321,7 +321,7 @@ def detect_img(yolo):
         else:
             r_image, _, _, _ = yolo.detect_image(image)
             # r_image.show() # Xander commented out
-            r_image.save(f'output/{image}')
+            r_image.save('output/test.jpg')
 
 
 def main():
