@@ -190,7 +190,7 @@ def get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, in
             else:
                 model_body = model_function(input_tensor, num_anchors//2, num_classes)
         else:
-            raise ValueError(f'{model_type} model type is not supported now')
+            raise ValueError(f'{model_type} model type is not supported now in yolo3_tiny_model_map')
 
     #YOLOv3 model has 9 anchors and 3 feature layers
     elif num_feature_layers == 3:
@@ -204,7 +204,7 @@ def get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, in
             else:
                 model_body = model_function(input_tensor, num_anchors//3, num_classes)
         else:
-            raise ValueError(f'{model_type} model type is not supported now')
+            raise ValueError(f'{model_type} model type is not supported now in yolo3_model_map')
     else:
         raise ValueError('model type mismatch anchors')
 
