@@ -95,7 +95,7 @@ class YOLO_np(object):
             else:
                 raise ValueError('Unsupported model type')
 
-            yolo_model.load_weights(weights_path) # make sure model, anchors and classes match
+            yolo_model.load_weights(weights_path, by_name=True) # make sure model, anchors and classes match
             if self.pruning_model:
                 yolo_model = sparsity.strip_pruning(yolo_model)
             yolo_model.summary()
@@ -420,6 +420,7 @@ def main():
         print('Dumping out training model to inference model')
         yolo.dump_model_file(args.output_model_file)
         sys.exit()
+
 
     if args.image:
         """
