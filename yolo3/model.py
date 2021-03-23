@@ -204,7 +204,7 @@ def get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, in
             else:
                 model_body = model_function(input_tensor, num_anchors//3, num_classes)
         else:
-            raise ValueError('This model type is not supported now')
+            raise ValueError(f'{model_type} model type is not supported now')
     else:
         raise ValueError('model type mismatch anchors')
 
