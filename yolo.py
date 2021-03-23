@@ -35,8 +35,8 @@ optimize_tf_gpu(tf, K)
 #tf.enable_eager_execution()
 
 default_config = {
-        "model_type": tiny_yolo3_mobilenet_lite #'scaled_yolo4_csp_darknet',
-        "weights_path": os.path.join('weights', 'tiny_yolo3_mobilenet_lite_416_coco.h5') # os.path.join('weights', 'scaled-yolov4-csp.h5'),
+        "model_type": tiny_yolo3_mobilenet_lite, #'scaled_yolo4_csp_darknet',
+        "weights_path": os.path.join('weights', 'tiny_yolo3_mobilenet_lite_416_coco.h5'), # os.path.join('weights', 'scaled-yolov4-csp.h5'),
         "pruning_model": False,
         "anchors_path": os.path.join('configs', 'tiny_yolo3_anchors.txt'), #os.path.join('configs', 'yolo4_anchors.txt')
         "classes_path": os.path.join('configs', 'coco_classes.txt'),
