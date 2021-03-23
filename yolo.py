@@ -9,7 +9,7 @@ import os, sys, argparse
 import cv2
 import time
 from timeit import default_timer as timer
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 import numpy as np
 from tensorflow.keras import backend as K
 from tensorflow.keras.models import Model, load_model
@@ -25,7 +25,7 @@ from yolo2.model import get_yolo2_model, get_yolo2_inference_model
 from yolo2.postprocess_np import yolo2_postprocess_np
 from common.data_utils import preprocess_image
 from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optimize_tf_gpu
-# from tensorflow.keras.utils import multi_gpu_model
+from tensorflow.keras.utils import multi_gpu_model
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -35,10 +35,10 @@ optimize_tf_gpu(tf, K)
 #tf.enable_eager_execution()
 
 default_config = {
-        "model_type": 'scaled_yolo4_csp_darknet', #'scaled_yolo4_csp_darknet', # 'yolo3_mobilenet_lite'
-        "weights_path": os.path.join('weights', 'scaled-yolov4-csp.h5'), #os.path.join('weights', 'scaled-yolov4-csp.h5'), # os.path.join('weights', 'yolo3_mobilenet_lite_416_coco.h5')
+        "model_type": 'tiny_yolo3_darknet',
+        "weights_path": os.path.join('weights', 'yolov3-tiny.h5'),
         "pruning_model": False,
-        "anchors_path": os.path.join('configs', 'yolo4_anchors.txt'), #os.path.join('configs', 'yolo4_anchors.txt'), #os.path.join('configs', 'yolo3_anchors.txt')
+        "anchors_path": os.path.join('configs', 'tiny_yolo3_anchors.txt'),
         "classes_path": os.path.join('configs', 'coco_classes.txt'),
         "score" : 0.1,
         "iou" : 0.4,
@@ -95,7 +95,7 @@ class YOLO_np(object):
             else:
                 raise ValueError('Unsupported model type')
 
-            yolo_model.load_weights(weights_path, by_name=True) # make sure model, anchors and classes match
+            yolo_model.load_weights(weights_path) # make sure model, anchors and classes match
             if self.pruning_model:
                 yolo_model = sparsity.strip_pruning(yolo_model)
             yolo_model.summary()
@@ -297,8 +297,7 @@ def detect_video(yolo, video_path, output_path=""):
         cv2.putText(result, text=fps, org=(3, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.50, color=(255, 0, 0), thickness=2)
         cv2.namedWindow("result", cv2.WINDOW_NORMAL)
-        cv2.imshow("result", result) 
-
+        cv2.imshow("result", result)
         if isOutput:
             out.write(result)
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -320,8 +319,7 @@ def detect_img(yolo):
             continue
         else:
             r_image, _, _, _ = yolo.detect_image(image)
-            # r_image.show() # Xander commented out
-            r_image.save(f"output/{img.split('/')[-1]}")
+            r_image.show()
 
 
 def main():
@@ -420,7 +418,6 @@ def main():
         print('Dumping out training model to inference model')
         yolo.dump_model_file(args.output_model_file)
         sys.exit()
-
 
     if args.image:
         """
