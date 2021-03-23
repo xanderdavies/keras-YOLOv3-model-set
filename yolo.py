@@ -319,7 +319,8 @@ def detect_img(yolo):
             continue
         else:
             r_image, _, _, _ = yolo.detect_image(image)
-            r_image.show()
+            # r_image.show()
+            r_image.save(f"{img}.png")
 
 
 def main():
