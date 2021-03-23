@@ -1,4 +1,6 @@
-numpy # ==1.17.5
+python3-opencv
+Cython
+numpy
 setuptools
 scipy
 scikit-learn
@@ -23,3 +25,4 @@ imgaug
 imagecorruptions
 bokeh
 tidecv
+keras==2.2.4 
