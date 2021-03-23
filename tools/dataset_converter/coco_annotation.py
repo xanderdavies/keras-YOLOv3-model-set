@@ -111,7 +111,7 @@ for dataset, datatype in sets:
             #  "date_captured": "date_string",
             #  "id": int
             # }
-            image_id = image['id'] # Xander changed from 'id'
+            image_id = image['id']
             image_file = '%s/%s/%012d.jpg' % (dataset_realpath, datatype, image_id)
             image_annotation_dict[image_file] = []
     else: # Xander added this

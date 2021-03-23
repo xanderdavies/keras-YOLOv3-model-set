@@ -363,7 +363,7 @@ def sort(yolo, args):
         # refresh window
         cv2.namedWindow("SORT", 0);
         cv2.resizeWindow('SORT', 1024, 768);
-        cv2.imshow('SORT', frame)  Xander commented out
+        # cv2.imshow('SORT', frame)  # Xander commented out
 
         if save_output:
             #save a frame
