@@ -1,5 +1,4 @@
 Cython
-numpy
 setuptools
 scipy
 scikit-learn
