@@ -237,7 +237,7 @@ def get_yolo3_train_model(model_type, anchors, num_classes, weights_path=None, f
     print('model layer number:', len(model_body.layers))
 
     if weights_path:
-        model_body.load_weights(weights_path, by_name=True)#, skip_mismatch=True)
+        model_body.load_weights(weights_path, by_name=True, skip_mismatch=True)
         print('Load weights {}.'.format(weights_path))
 
     if freeze_level in [1, 2]:
