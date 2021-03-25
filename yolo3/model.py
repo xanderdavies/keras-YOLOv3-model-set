@@ -7,7 +7,7 @@ import warnings
 from functools import partial
 
 import tensorflow.keras.backend as K
-from tensorflow.keras.layers import Input, Lambda, Dense
+from tensorflow.keras.layers import Input, Lambda
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
@@ -214,7 +214,8 @@ def get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, in
     return model_body, backbone_len
 
 
-def get_yolo3_train_model(model_type, anchors, num_classes, from_coco=True, weights_path=None, freeze_level=1, optimizer=Adam(lr=1e-3, decay=0), label_smoothing=0, elim_grid_sense=False, model_pruning=False, pruning_end_step=10000):
+
+def get_yolo3_train_model(model_type, anchors, num_classes, weights_path=None, freeze_level=1, optimizer=Adam(lr=1e-3, decay=0), label_smoothing=0, elim_grid_sense=False, model_pruning=False, pruning_end_step=10000):
     '''create the training model, for YOLOv3'''
     #K.clear_session() # get a new session
     num_anchors = len(anchors)
@@ -231,29 +232,13 @@ def get_yolo3_train_model(model_type, anchors, num_classes, from_coco=True, weig
     # ]
     y_true = [Input(shape=(None, None, 3, num_classes+5), name='y_true_{}'.format(l)) for l in range(num_feature_layers)]
 
-    if weights_path!=None and from_coco: # Xander changed a lot
-        print(f"Activating fine-tune from coco on {num_classes} classes...")
-        coco_num_classes = 80
-        model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, coco_num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        model_body.load_weights(weights_path) #, by_name=True, skip_mismatch=True)
+    model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+    print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+    print('model layer number:', len(model_body.layers))
+
+    if weights_path:
+        model_body.load_weights(weights_path #, by_name=True, skip_mismatch=True)
         print('Load weights {}.'.format(weights_path))
-        model_body.pop()
-        print('Popped classification head')
-        model_body.add(Dense(num_classes, activation = 'softmax'))
-        print(f'Added classification head of {num_classes} classes')
-
-    elif weights_path!=None:
-        model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        model_body.load_weights(weights_path)
-        print('Load weights {}.'.format(weights_path))
-
-    else:
-        model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        print("I'm not suppsoed to be here")
-        raise ValueError
-        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
-        print('model layer number:', len(model_body.layers))
-
 
     if freeze_level in [1, 2]:
         # Freeze the backbone part or freeze all but final feature map & input layers.

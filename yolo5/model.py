@@ -111,27 +111,34 @@ def get_yolo5_train_model(model_type, anchors, num_classes, weights_path=None, f
     # ]
     y_true = [Input(shape=(None, None, 3, num_classes+5), name='y_true_{}'.format(l)) for l in range(num_feature_layers)]
 
-    if weights_path and from_coco: # Xander changed a lot
-        print(f"Activating fine-tune from coco on {num_classes} classes...")
-        coco_num_classes = 80
-        model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, coco_num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        model_body.load_weights(weights_path) #, by_name=True, skip_mismatch=True)
-        print('Load weights {}.'.format(weights_path))
-        model_body.pop()
-        print('Popped classification head')
-        model_body.add(Dense(num_classes, activation = 'softmax'))
-        print(f'Added classification head of {num_classes} classes')
 
-    elif weights_path:
+    if weights_path and from_coco:
+        print('Activating special from_coco fine-tuning mode...')
+        model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, 80, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+        print('model layer number:', len(model_body.layers))
+
+        model_body.load_weights(weights_path) # XANDER added for loading custom classes
+        print('Load coco weights {}.'.format(weights_path))
+        model_body.save(f'weights/pretrained_coco_{model_type}')
+        print("exported model as a .tf file to enable non-topological loading...")
+
         model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        model_body.load_weights(weights_path)
-        print('Load weights {}.'.format(weights_path))
+        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+        print('model layer number:', len(model_body.layers))
 
+        model_body.load_weights(weights_path, by_name=True, skip_mismatch=True)
+        print("Success!")
+
+    
     else:
         model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
         print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
         print('model layer number:', len(model_body.layers))
 
+        if weights_path:
+            model_body.load_weights(weights_path) # XANDER added for loading custom classes
+            print('Load weights {}.'.format(weights_path))
 
     if freeze_level in [1, 2]:
         # Freeze the backbone part or freeze all but final feature map & input layers.
