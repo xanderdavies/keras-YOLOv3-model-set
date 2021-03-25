@@ -231,7 +231,7 @@ def get_yolo3_train_model(model_type, anchors, num_classes, from_coco=True, weig
     # ]
     y_true = [Input(shape=(None, None, 3, num_classes+5), name='y_true_{}'.format(l)) for l in range(num_feature_layers)]
 
-    if weights_path: # Xander changed a lot
+    if weights_path!=None and from_coco: # Xander changed a lot
         print(f"Activating fine-tune from coco on {num_classes} classes...")
         coco_num_classes = 80
         model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, coco_num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
