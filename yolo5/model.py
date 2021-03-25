@@ -115,11 +115,11 @@ def get_yolo5_train_model(model_type, anchors, num_classes, from_coco=False, wei
 
     if weights_path and from_coco:
         print('Activating special from_coco fine-tuning mode...')
-        model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, 80, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
-        print('model layer number:', len(model_body.layers))
 
         if not os.path.exists(f'weights/pretrained_coco_{model_type}.h5'):
+            model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, 80, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+            print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+            print('model layer number:', len(model_body.layers))
             print(f"weights/pretrained_coco_{model_type}.h5 doesn't exist, creating...")
             model_body.load_weights(weights_path) # XANDER added for loading custom classes
             print('Load coco weights {}.'.format(weights_path))

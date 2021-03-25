@@ -37,7 +37,7 @@ from yolo3.loss import yolo3_loss
 from yolo3.postprocess import batched_yolo3_postprocess, batched_yolo3_prenms, Yolo3PostProcessLayer
 
 from common.model_utils import add_metrics, get_pruning_model
-
+import os
 
 # A map of model type to construction info list for YOLOv3
 #
@@ -232,13 +232,35 @@ def get_yolo3_train_model(model_type, anchors, num_classes, from_coco=False, wei
     # ]
     y_true = [Input(shape=(None, None, 3, num_classes+5), name='y_true_{}'.format(l)) for l in range(num_feature_layers)]
 
-    model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
-    print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
-    print('model layer number:', len(model_body.layers))
+    if weights_path and from_coco:
+        print('Activating special from_coco fine-tuning mode...')
 
-    if weights_path:
-        model_body.load_weights(weights_path) #, by_name=True, skip_mismatch=True)
-        print('Load weights {}.'.format(weights_path))
+        if not os.path.exists(f'weights/pretrained_coco_{model_type}.h5'):
+            model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, 80, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+            print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+            print('model layer number:', len(model_body.layers))
+            print(f"weights/pretrained_coco_{model_type}.h5 doesn't exist, creating...")
+            model_body.load_weights(weights_path) # XANDER added for loading custom classes
+            print('Load coco weights {}.'.format(weights_path))
+            model_body.save(f'weights/pretrained_coco_{model_type}.h5')
+            print("exported model as a tf folder to enable non-topological loading...")
+
+        model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+        print('model layer number:', len(model_body.layers))
+
+        model_body.load_weights(f'weights/pretrained_coco_{model_type}.h5', by_name=True, skip_mismatch=True)
+        print("Success!")
+
+    
+    else:
+        model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+        print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
+        print('model layer number:', len(model_body.layers))
+
+        if weights_path:
+            model_body.load_weights(weights_path) # XANDER added for loading custom classes
+            print('Load weights {}.'.format(weights_path))
 
     if freeze_level in [1, 2]:
         # Freeze the backbone part or freeze all but final feature map & input layers.
