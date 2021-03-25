@@ -242,13 +242,15 @@ def get_yolo3_train_model(model_type, anchors, num_classes, from_coco=True, weig
         model_body.add(Dense(num_classes, activation = 'softmax'))
         print(f'Added classification head of {num_classes} classes')
 
-    elif weights_path:
+    elif weights_path!=None:
         model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
         model_body.load_weights(weights_path)
         print('Load weights {}.'.format(weights_path))
 
     else:
         model_body, backbone_len = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
+        print("I'm not suppsoed to be here")
+        raise ValueError
         print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
         print('model layer number:', len(model_body.layers))
 
