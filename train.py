@@ -256,6 +256,10 @@ if __name__ == '__main__':
     parser.add_argument('--classes_path', type=str, required=False, default=os.path.join('configs', 'voc_classes.txt'),
         help='path to class definitions, default=%(default)s')
 
+    # from-coco
+    parser.add_argument('--from_coco', type=bool, required=False, default=False, 
+        help='Special from_coco fine-tune mode')
+
     # Training options
     parser.add_argument('--batch_size', type=int, required=False, default=16,
         help = "Batch size for train, default=%(default)s")
@@ -300,9 +304,6 @@ if __name__ == '__main__':
     parser.add_argument('--save_eval_checkpoint', default=False, action="store_true",
         help='Whether to save checkpoint with best evaluation result')
     
-    # from-coco
-    parser.add_argument('--from_coco', type=bool, default=False, required=False, help='Special from_coco fine-tune mode')
-
     args = parser.parse_args()
     height, width = args.model_image_size.split('x')
     args.model_image_size = (int(height), int(width))
