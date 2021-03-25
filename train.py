@@ -164,7 +164,7 @@ def main(args):
 
     else:
         # get normal train model
-        model = get_train_model(args.model_type, anchors, num_classes, weights_path=args.weights_path, freeze_level=freeze_level, optimizer=optimizer, label_smoothing=args.label_smoothing, elim_grid_sense=args.elim_grid_sense, model_pruning=args.model_pruning, pruning_end_step=pruning_end_step)
+        model = get_train_model(args.model_type, anchors, num_classes, from_coco=from_coco, weights_path=args.weights_path, freeze_level=freeze_level, optimizer=optimizer, label_smoothing=args.label_smoothing, elim_grid_sense=args.elim_grid_sense, model_pruning=args.model_pruning, pruning_end_step=pruning_end_step)
 
     model.summary()
 
@@ -299,6 +299,9 @@ if __name__ == '__main__':
         help = "Number of iteration(epochs) interval to do evaluation, default=%(default)s")
     parser.add_argument('--save_eval_checkpoint', default=False, action="store_true",
         help='Whether to save checkpoint with best evaluation result')
+    
+    # from-coco
+    parser.add_argument('--from_coco', default=False, required=False, help='Special from_coco fine-tune mode')
 
     args = parser.parse_args()
     height, width = args.model_image_size.split('x')
