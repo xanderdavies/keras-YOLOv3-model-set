@@ -121,13 +121,13 @@ def get_yolo5_train_model(model_type, anchors, num_classes, from_coco=False, wei
         model_body.load_weights(weights_path) # XANDER added for loading custom classes
         print('Load coco weights {}.'.format(weights_path))
         model_body.save(f'weights/pretrained_coco_{model_type}')
-        print("exported model as a .tf file to enable non-topological loading...")
+        print("exported model as a tf folder to enable non-topological loading...")
 
         model_body, backbone_len = get_yolo5_model(model_type, num_feature_layers, num_anchors, num_classes, model_pruning=model_pruning, pruning_end_step=pruning_end_step)
         print('Create {} {} model with {} anchors and {} classes.'.format('Tiny' if num_feature_layers==2 else '', model_type, num_anchors, num_classes))
         print('model layer number:', len(model_body.layers))
 
-        model_body.load_weights(weights_path, by_name=True, skip_mismatch=True)
+        model_body.load_weights(f'weights/pretrained_coco_{model_type}', by_name=True, skip_mismatch=True)
         print("Success!")
 
     
