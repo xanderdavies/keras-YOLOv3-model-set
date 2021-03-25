@@ -301,7 +301,7 @@ if __name__ == '__main__':
         help='Whether to save checkpoint with best evaluation result')
     
     # from-coco
-    parser.add_argument('--from_coco', default=False, required=False, help='Special from_coco fine-tune mode')
+    parser.add_argument('--from_coco', default=False, required=False, action="store_true", help='Special from_coco fine-tune mode')
 
     args = parser.parse_args()
     height, width = args.model_image_size.split('x')
