@@ -20,6 +20,7 @@ from yolo5.loss import yolo5_loss
 from yolo5.postprocess import batched_yolo5_postprocess
 
 from common.model_utils import add_metrics, get_pruning_model
+import os
 
 
 # A map of model type to construction info list for YOLOv5
