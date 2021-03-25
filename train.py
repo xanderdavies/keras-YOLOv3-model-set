@@ -297,11 +297,11 @@ if __name__ == '__main__':
         help='Whether to do evaluation on validation dataset during training')
     parser.add_argument('--eval_epoch_interval', type=int, required=False, default=10,
         help = "Number of iteration(epochs) interval to do evaluation, default=%(default)s")
-    parser.add_argument('--save_eval_checkpoint', default=False, action="store_true",
+    parser.add_argument('--save_eval_checkpoint', type=bool, default=False, action="store_true",
         help='Whether to save checkpoint with best evaluation result')
     
     # from-coco
-    parser.add_argument('--from_coco', default=False, required=False, action="store_true", help='Special from_coco fine-tune mode')
+    parser.add_argument('--from_coco', default=False, required=False, help='Special from_coco fine-tune mode')
 
     args = parser.parse_args()
     height, width = args.model_image_size.split('x')
